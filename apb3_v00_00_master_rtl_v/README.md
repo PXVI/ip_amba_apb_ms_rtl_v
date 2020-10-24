@@ -1,7 +1,7 @@
 # APB3 Master RTL ( v00.00 ) - Zero
 
 <br />
-The followig are the details regarding the APB3 Master Zero IP <br />
+The followig are the details regarding the APB3 Master Zero IP: <br />
 
   - Parameterized port signals
   - Generic application/cpu interface for easy integration
