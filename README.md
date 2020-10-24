@@ -2,7 +2,7 @@
 
 <br />
 
-This repository houses various amba apb master and slave protocol ip's. The basic standard protocol verison which is supported by the rtl's are **AMBA3**.<br />
+This repository houses various amba apb master and slave protocol ip's. The protocol verison which is supported by the rtl's is **Arm's AMBA3** open standard protocol.<br />
 The reason for adding verison numbers for the IP is that the RTL is funtionally stable in every aspect, but will need more user specific features in the future and if a new feature is added; it wil be provided as a stand alone IP built over the existing one.<br />
 <br />
 
