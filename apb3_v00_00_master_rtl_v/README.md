@@ -2,6 +2,7 @@
 
 The RTL desings for the AMBA APB3 Master
 
-02_10_2019 :  Master Template generated.
-02_10_2019 :  Created the CVS Workspace and checked in all the neccessary files.
+<br />
+02_10_2019 :  Master Template generated.<br />
+02_10_2019 :  Created the CVS Workspace and checked in all the neccessary files.<br />
               Created the top for the ip_amba_apb_master_top block.
