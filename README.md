@@ -22,6 +22,7 @@ The reason for adding verison numbers for the IP is that the RTL is funtionally 
     - Modifiable granularity
     - No support for timeouts
 
+<br />
   - APB3 Master One ( v00.00 )
     - Simple interface
     - Easy transaction generation
