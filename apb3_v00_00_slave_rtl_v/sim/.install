@@ -33,6 +33,6 @@
 temp_path=`echo $PWD`
 
 # Setting the Work Environment Variable
-export WORK_HOME="$PWD/../"
-export UVM_PATH="/home/EDA/mentor/questasim/uvm-1.1d/"
-export IP_AMBA_APB_SLAVE_HOME="${temp_path}/../
+export WORK_HOME='$PWD/../'
+export UVM_PATH='/home/EDA/mentor/questasim/uvm-1.1d/'
+export IP_AMBA_APB_SLAVE_HOME='${temp_path}/../'
