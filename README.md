@@ -30,4 +30,9 @@ The reason for adding verison numbers for the IP is that the RTL is funtionally 
     - Parameterized Design
     - Full APB3 compliance
     - Lighter version ( Easier to use and configure )
-    - Open source design/verif flow used
+  - APB3 Slave One ( v00.00 )
+    - Simple interface
+    - Easy transaction generation
+    - Parameterized Design
+    - Full APB3 Slave compliance
+    - Light Version
