@@ -1,6 +1,6 @@
 # -----------------------------------------------------------------------------------
 # Module Name  :
-# Date Created : 10:27:43 IS, 14 January, 2020 [ Tuesday ] 
+# Date Created : 15:28:36 IST, 29 March, 2021 [ Monday ]
 #
 # Author       : pxvi
 # Description  :
@@ -36,11 +36,11 @@
 
 TESTNAME?=NO_TEST
 
-FILENAME?=./../top/ip_amba_apb4_m_top.v
+FILENAME?=./../top/ip_amba_apb4_ms_integration_top.v
 
 COMPILE_FILELIST?=./comp_filelist/compile_filelist.list
 
-TOP_NAME?=ip_amba_apb4_m_top
+TOP_NAME?=ip_amba_apb4_ms_integration_top
 
 ifdef $(DO_FILE)
 DO_CMD= -do $(DO_FILE)
@@ -48,6 +48,7 @@ else
 DO_CMD= -do "run -all; quit -f"
 endif
 
+ENABLE_TB?=0
 LINT?=0
 WALL?=0
 
@@ -55,6 +56,14 @@ ifeq ($(WALL),1)
 WALL_ARG=-Wall
 else
 WALL__ARG=
+endif
+
+ifeq ($(LINT),1)
+TB_STIMULUS_ARGS=
+else
+ifeq ($(ENABLE_TB),1)
+TB_STIMULUS_ARGS=+define+TESTBENCH_STIMULUS_ENABLED
+endif
 endif
 
 # **********************
@@ -89,6 +98,7 @@ comp:
 	-l compile.log \
 	-sv \
 	-vopt \
+	$(TB_STIMULUS_ARGS) \
 	-writetoplevels questa.tops \
 	$(FILENAME) \
 	-f $(COMPILE_FILELIST);

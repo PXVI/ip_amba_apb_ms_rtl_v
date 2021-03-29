@@ -1,6 +1,6 @@
 /* -----------------------------------------------------------------------------------
  * Module Name  :
- * Date Created : 12:02:16 IST, 29 March, 2021 [ Monday ]
+ * Date Created : 15:20:14 IST, 29 March, 2021 [ Monday ]
  *
  * Author       : pxvi
  * Description  :
@@ -30,44 +30,13 @@
 
  * ----------------------------------------------------------------------------------- */
 
-`include "ip_amba_apb4_m_top_defines.vh"
-`include "ip_amba_apb4_m_top_parameters.vh"
+`include "ip_amba_apb4_m_top.v"
+`include "ip_amba_apb4_s_top.v"
 
-module ip_amba_apb4_m_top `IP_AMBA_APB4_MASTER_PARAM_DECL (  
+module ip_amba_apb4_ms_integration_top;
 
-    // APB Interface Side Signals
-    // Global Inputs
-    PCLK,
-    PRESETn,
-    
-    // Master Inputs
-    PREADY,
-    PRDATA,
-    PSLVERR,
-    
-    // Master Outputs
-    PADDR,
-    PPROT,
-    PSELx,
-    PENABLE,
-    PWRITE,
-    PWDATA,
-    PSTRB,
-);
-    
-    input wire                          PCLK;
-    input wire                          PRESETn;
-    
-    input wire                          PREADY;
-    input wire   [PRDATA_width-1:0]     PRDATA;
-    input wire                          PSLVERR;
-    
-    output wire  [PADDR_width-1:0]      PADDR;
-    output wire  [3-1:0]                PPROT;
-    output wire  [PSELx_width-1:0]      PSELx;
-    output wire                         PENABLE;
-    output wire                         PWRITE;
-    output wire  [PWDATA_width-1:0]     PWDATA;
-    output wire  [PSTRB_width-1:0]      PSTRB;
-    
+    `ifdef TESTBENCH_STIMULUS_ENABLED
+
+    `endif
+
 endmodule

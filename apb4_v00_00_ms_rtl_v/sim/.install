@@ -1,6 +1,6 @@
 # -----------------------------------------------------------------------------------
 # Module Name  :
-# Date Created : 11:59:42 IST, 29 March, 2021 [ Monday ]
+# Date Created : 15:26:56 IST, 29 March, 2021 [ Monday ]
 #
 # Author       : pxvi
 # Description  :
@@ -39,6 +39,17 @@ echo $WORK_HOME;
 export UVM_PATH="/home/EDA/mentor/questasim/uvm-1.1d/"
 echo -n "UVM_PATH : ";
 echo $UVM_PATH;
-export IP_AMBA_APB4_MASTER_HOME="${temp_path}/../"
-echo -n "IP_AMBA_APB4_MASTER_HOME : ";
-echo $IP_AMBA_APB4_MASTER_HOME;
+
+export IP_AMBA_APB4_TB_HOME="${temp_path}/../"
+echo -n "IP_AMBA_APB4_TB_HOME : ";
+echo $IP_AMBA_APB4_TB_HOME;
+
+# Master
+cd $IP_AMBA_APB4_TB_HOME/apb4_v00_00_m_rtl_v/sim/;
+source .install
+
+# Slave
+cd $IP_AMBA_APB4_TB_HOME/apb4_v00_00_s_rtl_v/sim/;
+source .install
+
+cd $IP_AMBA_APB4_TB_HOME/sim
