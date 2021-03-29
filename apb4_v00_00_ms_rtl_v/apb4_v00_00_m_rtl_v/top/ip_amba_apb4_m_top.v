@@ -52,7 +52,7 @@ module ip_amba_apb4_m_top `IP_AMBA_APB4_MASTER_PARAM_DECL (
     PENABLE,
     PWRITE,
     PWDATA,
-    PSTRB,
+    PSTRB
 );
     
     input wire                          PCLK;

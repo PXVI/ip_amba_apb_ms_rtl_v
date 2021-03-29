@@ -35,8 +35,84 @@
 
 module ip_amba_apb4_ms_integration_top;
 
+    parameter   PRDATA_W = 32,
+                PWDATA_W = 32,
+                PSTRB_W = 4,
+                PADDR_W = 32,
+                PSELX_W = 3;
+ 
+    parameter   WORD_LENGTH = 32,
+                MEM_DEPTH = 128,
+                DEV_BASE_ADDRESS = 0;
+
+    // Interfacing Signals
+    // -------------------
+
+
     `ifdef TESTBENCH_STIMULUS_ENABLED
 
     `endif
+
+    // Integration of the two IPs
+    // --------------------------
+    
+    ip_amba_apb4_m_top  #(
+                            .PRDATA_width(),
+                            .PWDATA_width(),
+                            .PSTRB_width(),
+                            .PADDR_width(),
+                            .PSELx_width()
+                        )
+                        master
+                        (
+                            // Protocol Signals
+                            .PCLK(),
+                            .PRESETn(),
+                            
+                            .PREADY(),
+                            .PRDATA(),
+                            .PSLVERR(),
+                            
+                            .PADDR(),
+                            .PPROT(),
+                            .PSELx(),
+                            .PENABLE(),
+                            .PWRITE(),
+                            .PWDATA(),
+                            .PSTRB()
+
+                            // App Interface Signals
+
+                        );
+    
+    ip_amba_apb4_s_top  #(
+                            .PRDATA_width(),
+                            .PWDATA_width(),
+                            .PSTRB_width(),
+                            .PADDR_width(),
+                            .PSELx_width(),
+                            .WORD_LENGTH(),
+                            .MEM_DEPTH(),
+                            .DEV_BASE_ADDRESS()
+                        )
+                        slave
+                        (
+                            // Protocol Signals
+                            .PCLK(),
+                            .PRESETn(),
+                            
+                            .PREADY(),
+                            .PRDATA(),
+                            .PSLVERR(),
+                            
+                            .PADDR(),
+                            .PPROT(),
+                            .PSELx(),
+                            .PENABLE(),
+                            .PWRITE(),
+                            .PWDATA(),
+                            .PSTRB()
+
+                        );
 
 endmodule
