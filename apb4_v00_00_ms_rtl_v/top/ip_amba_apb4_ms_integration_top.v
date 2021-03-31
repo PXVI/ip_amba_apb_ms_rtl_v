@@ -39,6 +39,7 @@ module ip_amba_apb4_ms_integration_top;
                 PWDATA_W = 32,
                 PSTRB_W = 4,
                 PADDR_W = 32,
+                PPROT_W = 3,
                 PSELX_W = 3;
  
     parameter   WORD_LENGTH = 32,
@@ -48,71 +49,99 @@ module ip_amba_apb4_ms_integration_top;
     // Interfacing Signals
     // -------------------
 
-
-    `ifdef TESTBENCH_STIMULUS_ENABLED
-
-    `endif
+    wire PCLK_w;
+    wire PRESETn_w;
+    
+    wire PREADY_w;
+    wire [PRDATA_W-1:0] PRDATA_w;
+    wire PSLVERR_w;
+    
+    wire [PADDR_W-1:0] PADDR_w;
+    wire [PPROT_W-1:0] PPROT_w;
+    wire [PSELX_W-1:0] PSELx_w;
+    wire PENABLE_w;
+    wire PWRITE_w;
+    wire [PWDATA_W-1:0] PWDATA_w;
+    wire [PSTRB_W-1:0] PSTRB_w;
 
     // Integration of the two IPs
     // --------------------------
     
     ip_amba_apb4_m_top  #(
-                            .PRDATA_width(),
-                            .PWDATA_width(),
-                            .PSTRB_width(),
-                            .PADDR_width(),
-                            .PSELx_width()
+                            .PRDATA_width(PRDATA_W),
+                            .PWDATA_width(PWDATA_W),
+                            .PSTRB_width(PSTRB_W),
+                            .PADDR_width(PADDR_W),
+                            .PSELx_width(PSELX_W)
                         )
                         master
                         (
                             // Protocol Signals
-                            .PCLK(),
-                            .PRESETn(),
+                            .PCLK(PCLK_w),
+                            .PRESETn(PRESETn_w),
                             
-                            .PREADY(),
-                            .PRDATA(),
-                            .PSLVERR(),
+                            .PREADY(PREADY_w),
+                            .PRDATA(PRDATA_w),
+                            .PSLVERR(PSLVERR_w),
                             
-                            .PADDR(),
-                            .PPROT(),
-                            .PSELx(),
-                            .PENABLE(),
-                            .PWRITE(),
-                            .PWDATA(),
-                            .PSTRB()
+                            .PADDR(PADDR_w),
+                            .PPROT(PPROT_w),
+                            .PSELx(PSELx_w),
+                            .PENABLE(PENABLE_w),
+                            .PWRITE(PWRITE_w),
+                            .PWDATA(PWDATA_w),
+                            .PSTRB(PSTRB_w)
 
                             // App Interface Signals
 
                         );
     
     ip_amba_apb4_s_top  #(
-                            .PRDATA_width(),
-                            .PWDATA_width(),
-                            .PSTRB_width(),
-                            .PADDR_width(),
-                            .PSELx_width(),
-                            .WORD_LENGTH(),
-                            .MEM_DEPTH(),
-                            .DEV_BASE_ADDRESS()
+                            .PRDATA_width(PRDATA_W),
+                            .PWDATA_width(PWDATA_W),
+                            .PSTRB_width(PSTRB_W),
+                            .PADDR_width(PADDR_W),
+                            .PSELx_width(PSELX_W),
+                            .WORD_LENGTH(WORD_LENGTH),
+                            .MEM_DEPTH(MEM_DEPTH),
+                            .DEV_BASE_ADDRESS(DEV_BASE_ADDRESS)
                         )
                         slave
                         (
                             // Protocol Signals
-                            .PCLK(),
-                            .PRESETn(),
+                            .PCLK(PCLK_w),
+                            .PRESETn(PRESETn_w),
                             
-                            .PREADY(),
-                            .PRDATA(),
-                            .PSLVERR(),
+                            .PREADY(PREADY_w),
+                            .PRDATA(PRDATA_w),
+                            .PSLVERR(PSLVERR_w),
                             
-                            .PADDR(),
-                            .PPROT(),
-                            .PSELx(),
-                            .PENABLE(),
-                            .PWRITE(),
-                            .PWDATA(),
-                            .PSTRB()
+                            .PADDR(PADDR_w),
+                            .PPROT(PPROT_w),
+                            .PSELx(PSELx_w),
+                            .PENABLE(PENABLE_w),
+                            .PWRITE(PWRITE_w),
+                            .PWDATA(PWDATA_w),
+                            .PSTRB(PSTRB_w)
 
                         );
+    
+    // Stimulus Generation ( And Monitoring )
+    // --------------------------------------
+
+    `ifdef TESTBENCH_STIMULUS_ENABLED
+
+
+
+        // Dump Generation
+        // ---------------
+
+        initial
+        begin
+            $dumpfile( "apb_dump.vcd" );
+            $dumpvars( 0,ip_amba_apb4_ms_integration_top );
+        end
+
+    `endif
 
 endmodule
