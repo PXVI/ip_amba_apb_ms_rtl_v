@@ -64,6 +64,12 @@ module ip_amba_apb4_ms_integration_top;
     wire [PWDATA_W-1:0] PWDATA_w;
     wire [PSTRB_W-1:0] PSTRB_w;
 
+    // Stimulus Driving Signals ( For APB Master )
+    // -------------------------------------------
+    
+    reg PCLK_sr;
+    reg PRESETn_sr;
+
     // Integration of the two IPs
     // --------------------------
     
@@ -131,7 +137,7 @@ module ip_amba_apb4_ms_integration_top;
 
     `ifdef TESTBENCH_STIMULUS_ENABLED
 
-
+        `include "apb4_master_stim_driver.sv"
 
         // Dump Generation
         // ---------------

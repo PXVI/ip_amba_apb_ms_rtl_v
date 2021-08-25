@@ -356,7 +356,6 @@ module ip_amba_apb_master_top `IP_AMBA_APB_PARAM_DECL (
             pselx_timeout_flag_reg <= 1'b0;
             pselx_timeout_counter_r <= 'd0;
         end
-
     end
     
 endmodule
