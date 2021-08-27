@@ -52,7 +52,16 @@ module ip_amba_apb4_m_top `IP_AMBA_APB4_MASTER_PARAM_DECL (
     PENABLE,
     PWRITE,
     PWDATA,
-    PSTRB
+    PSTRB,
+
+    // Application Interface Signals
+    rdy_ap,
+    vld_ap,
+    addr_ap,
+    wdata_ap,
+    wstrb_ap,
+    rdata_ap,
+    err_ap
 );
     
     input wire                          PCLK;
@@ -69,5 +78,14 @@ module ip_amba_apb4_m_top `IP_AMBA_APB4_MASTER_PARAM_DECL (
     output wire                         PWRITE;
     output wire  [PWDATA_width-1:0]     PWDATA;
     output wire  [PSTRB_width-1:0]      PSTRB;
+
+    input wire                          vld_ap;
+    input wire   [PADDR_width-1:0]      addr_ap;
+    input wire   [PWDATA_width-1:0]     wdata_ap;
+    input wire   [PSTRB_width-1:0]      wstrb_ap;
+
+    output wire                         rdy_ap;                    
+    output wire  [PRDATA_width-1:0]     rdata_ap;
+    output wire                         err_ap;
     
 endmodule
