@@ -39,8 +39,7 @@ module ip_amba_apb4_ms_integration_top;
                 PWDATA_W = 32,
                 PSTRB_W = 4,
                 PADDR_W = 32,
-                PPROT_W = 3,
-                PSELX_W = 3;
+                PPROT_W = 3;
  
     parameter   WORD_LENGTH = 32,
                 MEM_DEPTH = 128,
@@ -58,11 +57,20 @@ module ip_amba_apb4_ms_integration_top;
     
     wire [PADDR_W-1:0] PADDR_w;
     wire [PPROT_W-1:0] PPROT_w;
-    wire [PSELX_W-1:0] PSELx_w;
+    wire               PSELx_w;
     wire PENABLE_w;
     wire PWRITE_w;
     wire [PWDATA_W-1:0] PWDATA_w;
     wire [PSTRB_W-1:0] PSTRB_w;
+    
+    wire                    vld_ap;
+    wire   [PADDR_W-1:0]    addr_ap;
+    wire   [PWDATA_W-1:0]   wdata_ap;
+    wire   [PSTRB_W-1:0]    wstrb_ap;
+
+    wire                    rdy_ap;                    
+    wire  [PRDATA_W-1:0]    rdata_ap;
+    wire                    err_ap;
 
     // Stimulus Driving Signals ( For APB Master )
     // -------------------------------------------
@@ -77,8 +85,7 @@ module ip_amba_apb4_ms_integration_top;
                             .PRDATA_width(PRDATA_W),
                             .PWDATA_width(PWDATA_W),
                             .PSTRB_width(PSTRB_W),
-                            .PADDR_width(PADDR_W),
-                            .PSELx_width(PSELX_W)
+                            .PADDR_width(PADDR_W)
                         )
                         master
                         (
@@ -96,10 +103,17 @@ module ip_amba_apb4_ms_integration_top;
                             .PENABLE(PENABLE_w),
                             .PWRITE(PWRITE_w),
                             .PWDATA(PWDATA_w),
-                            .PSTRB(PSTRB_w)
+                            .PSTRB(PSTRB_w),
 
                             // App Interface Signals
-
+                            .rdy_ap( rdy_ap ),
+                            .vld_ap( vld_ap ),
+                            .rw_ap( rw_ap ),
+                            .addr_ap( addr_ap ),
+                            .wdata_ap( wdata_ap ),
+                            .wstrb_ap( wstrb_ap ),
+                            .rdata_ap( rdata_ap ),
+                            .err_ap( err_ap )
                         );
     
     ip_amba_apb4_s_top  #(
@@ -107,7 +121,6 @@ module ip_amba_apb4_ms_integration_top;
                             .PWDATA_width(PWDATA_W),
                             .PSTRB_width(PSTRB_W),
                             .PADDR_width(PADDR_W),
-                            .PSELx_width(PSELX_W),
                             .WORD_LENGTH(WORD_LENGTH),
                             .MEM_DEPTH(MEM_DEPTH),
                             .DEV_BASE_ADDRESS(DEV_BASE_ADDRESS)
@@ -129,7 +142,6 @@ module ip_amba_apb4_ms_integration_top;
                             .PWRITE(PWRITE_w),
                             .PWDATA(PWDATA_w),
                             .PSTRB(PSTRB_w)
-
                         );
     
     // Stimulus Generation ( And Monitoring )
@@ -141,12 +153,13 @@ module ip_amba_apb4_ms_integration_top;
 
         // Dump Generation
         // ---------------
-
-        initial
-        begin
-            $dumpfile( "apb_dump.vcd" );
-            $dumpvars( 0,ip_amba_apb4_ms_integration_top );
-        end
+        `ifdef ENABLE_DUMP
+            initial
+            begin
+                $dumpfile( "apb_dump.vcd" );
+                $dumpvars( 0,ip_amba_apb4_ms_integration_top );
+            end
+        `endif
 
     `endif
 

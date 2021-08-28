@@ -48,6 +48,7 @@ else
 DO_CMD= -do "run -all; quit -f"
 endif
 
+DUMP?=0
 ENABLE_TB?=0
 LINT?=0
 WALL?=0
@@ -66,6 +67,10 @@ TB_STIMULUS_ARGS=+define+TESTBENCH_STIMULUS_ENABLED
 endif
 endif
 
+ifeq ($(DUMP),1)
+DUMP_ARG=+define+ENABLE_DUMP
+endif
+
 # **********************
 # Labels Declarations
 # **********************
@@ -82,7 +87,7 @@ comp_only : clean lib comp
 # --------------------------------------------
 clean:
 	@echo "Running Clean Command...";
-	@rm -rf *.log *.vcd *.wlf;
+	@rm -rf *.log *.vcd *.wlf *.fst;
 	@rm -rf work questa.tops transcript;
 	@rm -rf ./debug;
 	@rm -rf ./obj_dir;
@@ -99,6 +104,7 @@ comp:
 	-sv \
 	-vopt \
 	$(TB_STIMULUS_ARGS) \
+	$(DUMP_ARG) \
 	-writetoplevels questa.tops \
 	$(FILENAME) \
 	-f $(COMPILE_FILELIST);
@@ -116,6 +122,7 @@ sim:
 	-64 \
 	-c \
 	+define+UVM_NO_DPI \
+	$(DUMP_ARG) \
 	+UVM_TESTNAME=$(TESTNAME);
 
 # Library Generation
@@ -168,3 +175,9 @@ lint:
 	$(WALL_ARG) \
 	--lint-only;
 	@echo "Linting Complete!"
+
+# Open TB GTKWave
+# --------------------------------------------
+gtk:
+	@echo "Open gtkwave..."
+	@gtkwave -o apb_tb_top.gtkw &
