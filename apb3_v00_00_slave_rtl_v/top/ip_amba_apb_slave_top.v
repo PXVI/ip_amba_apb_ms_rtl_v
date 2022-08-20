@@ -89,6 +89,11 @@ module ip_amba_apb_slave_top `IP_AMBA_APB_SLAVE_PARAM_DECL (
     input wire  [PWDATA_width-1:0]      PWDATA;
     input wire  [PSTRB_width-1:0]       PSTRB;
 
+    // Local Parameter Declarations
+    // ----------------------------
+
+    localparam BASE_ADDR = 0;
+
     // Memory Array Declaration
     // ------------------------
     reg [WORD_LENGTH-1:0] mem_arr[2**MEM_DEPTH];

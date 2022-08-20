@@ -136,6 +136,7 @@ lib:
 opt:
 	@echo "Running Optimization...";
 	@vopt \
+	-64 \
 	+acc \
 	$(TOP_NAME) \
 	-o top_opt;

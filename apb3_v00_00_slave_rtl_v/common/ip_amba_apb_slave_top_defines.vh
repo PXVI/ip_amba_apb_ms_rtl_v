@@ -36,6 +36,8 @@
 `define PADDR_width         32
 `define PSELx_width         1
 
+`define APB_Base_Addr       1
+
 // By default the Memory Depth is 2**MEM_ARRAY_SIZE_INT
 `define MEM_ARRAY_SIZE_INT  2
 

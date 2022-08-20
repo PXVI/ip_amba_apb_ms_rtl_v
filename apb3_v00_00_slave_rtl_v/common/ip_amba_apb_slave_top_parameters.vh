@@ -39,5 +39,6 @@
                                         parameter PADDR_width = `PADDR_width, \
                                         parameter PSELx_width = `PSELx_width, \
                                         parameter WORD_LENGTH = `PRDATA_width, \
-                                        parameter MEM_DEPTH = `MEM_ARRAY_SIZE_INT \
+                                        parameter MEM_DEPTH = `MEM_ARRAY_SIZE_INT, \
+                                        parameter APB_BASE_ADDR = `APB_Base_Addr \
                                         )
