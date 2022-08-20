@@ -101,8 +101,8 @@ module ip_amba_apb4_m_top `IP_AMBA_APB4_MASTER_PARAM_DECL (
     // State Names
     // -----------
     localparam  IDLE = 0,
-                ACCESS = 1,
-                TRANSFER = 2;
+                SETUP = 1,
+                ACCESS = 2;
 
     // State Variables
     // ---------------
@@ -118,7 +118,7 @@ module ip_amba_apb4_m_top `IP_AMBA_APB4_MASTER_PARAM_DECL (
     assign PSTRB = PSTRB_r;
     assign PADDR = PADDR_r;
 
-    assign rdy_ap = ( ps == ACCESS ) ? 1'b0 : 1'b1;
+    assign rdy_ap = ( ps == SETUP ) ? 1'b0 : 1'b1;
     assign rdata_ap = PRDATA;
     assign err_ap = PSLVERR;
 
@@ -138,20 +138,20 @@ module ip_amba_apb4_m_top `IP_AMBA_APB4_MASTER_PARAM_DECL (
         ns = ps;
         case( ps )
             IDLE        :   begin
-                                if( vld_ap && PREADY )
+                                if( vld_ap )
                                 begin
-                                    ns = ACCESS;
+                                    ns = SETUP;
                                 end
                             end
-            ACCESS      :   begin
-                                ns = TRANSFER;
+            SETUP      :   begin
+                                ns = ACCESS;
                             end
-            TRANSFER    :   begin
+            ACCESS    :   begin
                                 if( PREADY )
                                 begin
                                     if( vld_ap )
                                     begin
-                                        ns = ACCESS;
+                                        ns = SETUP;
                                     end
                                     else
                                     begin
@@ -179,7 +179,7 @@ module ip_amba_apb4_m_top `IP_AMBA_APB4_MASTER_PARAM_DECL (
         end
         else
         begin
-            if( ( ps == IDLE || ps == TRANSFER ) && ( ns == ACCESS ) )
+            if( ( ps == IDLE || ps == ACCESS ) && ( ns == SETUP ) )
             begin
                 PADDR_r <= addr_ap;
                 PWDATA_r <= wdata_ap;
@@ -187,15 +187,15 @@ module ip_amba_apb4_m_top `IP_AMBA_APB4_MASTER_PARAM_DECL (
                 PSTRB_r <= wstrb_ap;
                 PSELx_r <= 1;
             end
-            if( ( ps == ACCESS ) && ( ns == TRANSFER ) )
+            if( ( ps == SETUP ) && ( ns == ACCESS ) )
             begin
                 PENABLE_r <= 1;
             end
-            if( ps == TRANSFER && PREADY )
+            if( ps == ACCESS )
             begin
                 PENABLE_r <= 0;
             end
-            if( ps == TRANSFER && ns == IDLE )
+            if( ps == ACCESS && ns == IDLE )
             begin
                 PSELx_r <= 0;
             end
